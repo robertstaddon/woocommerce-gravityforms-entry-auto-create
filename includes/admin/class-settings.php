@@ -13,16 +13,24 @@ if ( ! defined( 'ABSPATH' ) ) exit();
  */
 class Settings {
     
-    private $form_name = 'wcgf_entry_auto_create_form';
-    private $form_key = '_wcgf_entry_auto_create_form';
-
-    private $number_name = 'wcgf_entry_auto_create_number';
-    private $number_key = '_wcgf_entry_auto_create_number';
-
-    private $product_attribute_1_name = 'wcgf_entry_auto_create_attribute_1';
-    private $product_attribute_1_key = '_wcgf_entry_auto_create_attribute_1';
-    private $form_field_1_name = 'wcgf_entry_auto_create_field_1';
-    private $form_field_1_meta_key = '_wcgf_entry_auto_create_field_1';
+    private $settings_fields = array(
+        'gform' => array(
+            'name' => 'wcgf_entry_auto_create_form',
+            'key' => '_wcgf_entry_auto_create_form',
+        ),
+        'number' => array(
+            'name' => 'wcgf_entry_auto_create_number',
+            'key' => '_wcgf_entry_auto_create_number',
+        ),
+        'product_attribute_1' => array(
+            'name' => 'wcgf_entry_auto_create_attribute_1',
+            'key' => '_wcgf_entry_auto_create_attribute_1',
+        ),
+        'form_field_1' => array(
+            'name' => 'wcgf_entry_auto_create_field_1',
+            'key' => '_wcgf_entry_auto_create_field_1',
+        ),
+    );
 
 
     /**
@@ -43,15 +51,19 @@ class Settings {
 
             $forms = \GFAPI::get_forms();
 
-            $form_existing_value = get_term_meta( $tag->term_id, $this->form_key, true );
+            $form_setting = $this->settings_fields['gform'];
+            $form_existing_value = get_term_meta( $tag->term_id, $form_setting['key'], true );
+
+            $number_setting = $this->settings_fields['number'];
+            $number_existing_value = get_term_meta( $tag->term_id, $number_setting['key'], true );
 
             ?> 
-            <tr class="form-field <?php echo $this->form_name ?>-wrap">
+            <tr class="form-field <?php echo $form_setting['name']; ?>-wrap">
                 <th scope="row" valign="top">
-                    <label for="<?php echo $this->form_name ?>"><?php _e('Gravity Form'); ?><br><span style="font-weight: normal"><?php _e('in which to auto-create entries') ?></span></label>
+                    <label for="<?php echo $form_setting['name']; ?>"><?php _e('Gravity Form'); ?><br><span style="font-weight: normal"><?php _e('in which to auto-create entries') ?></span></label>
                 </th>
                 <td>
-                    <select type="text" name="<?php echo $this->form_name ?>" id="<?php echo $this->form_name ?>">
+                    <select type="text" name="<?php echo $form_setting['name']; ?>" id="<?php echo $form_setting['name']; ?>">
                         <option value="none">None</option>
                         <?php
                             foreach ( $forms as $form_id => $form ) {
@@ -62,7 +74,8 @@ class Settings {
                     </select>
                     <p class="description">Entries will be created in this Gravity Form whenever a product in this category is purchased.</p>
 
-                    <label for="<?php echo $this->number_name ?>">
+                    <label for="<?php echo $number_setting['name'] ?>">
+                    <input type="number" name="<?php echo $number_setting['name'] ?>" id="<?php echo $number_setting['name'] ?>" value="<?php echo $number_existing_value; ?>">
                 </td>
             </tr>
             <?php
@@ -72,8 +85,10 @@ class Settings {
     }
 
     function save_product_category_term( $term_id, $tt_id ) {
-        if ( isset( $_POST[ $this->form_name ] ) ) {
-            update_term_meta( $term_id, $this->form_key, $_POST[ $this->form_name ] );
+        foreach ( $this->settings_fields as $settings_field ) {
+            if ( isset( $_POST[ $settings_field['name'] ] ) ) {
+                update_term_meta( $term_id, $settings_field['key'], $settings_field['name'] );
+            }
         }
     }
 
