@@ -25,8 +25,8 @@ class Auto_Entries {
     public function __construct() {
 
         // Add product purchase action
-        add_action( 'woocommerce_order_status_completed', array( $this, 'handle_product_purchased' ) );
-//		add_action( 'woocommerce_checkout_update_order_meta', array( $this, 'create_entries' ), 10, 2 );
+//      add_action( 'woocommerce_order_status_completed', array( $this, 'handle_product_purchased' ) );
+		add_action( 'woocommerce_checkout_update_order_meta', array( $this, 'handle_product_purchased' ) );
 
     }
 
