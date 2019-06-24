@@ -33,19 +33,19 @@ class Plugin {
     private static $settings;
     
     /**
-     * The Form instance
+     * The Auto Entries instance
      *
      * @access private
-     * @var object $api
+     * @var object $auto_entries
      */
-    private static $form;
+    private static $auto_entries;
 
     /**
      * Instantiate the main class
      *
      * This function instantiates the class, initialize all functions and return the object.
      * 
-     * @return object The LearnDash_Muvi instance.
+     * @return object The Plugin instance.
      */
     public static function instance() {
 
@@ -143,13 +143,13 @@ class Plugin {
      */
     public function includes() {	
 
-        if ( is_admin() ) {
-            include PLUGIN_PATH . '/includes/admin/class-settings.php';
+        include PLUGIN_PATH . '/includes/admin/class-settings.php';
+        if ( is_admin() )
             self::$settings = new Settings();
-        }
-        
-        include PLUGIN_PATH . '/includes/class-form.php';
-        self::$form = new Form();
+
+        include PLUGIN_PATH . '/includes/class-auto-entries.php';
+        self::$auto_entries = new Auto_Entries();
+
     }
 
 
