@@ -55,7 +55,7 @@ class Auto_Entries {
     }
     		
     /**
-     * Create a new Gravity Forms entry on the My Employee Courses Form
+     * Create new Gravity Forms entries based on the products in an order
      */
     private function create_entries( int $cat_id, \WC_Order_Item_Product $item, \WC_Order $order ) {
 
