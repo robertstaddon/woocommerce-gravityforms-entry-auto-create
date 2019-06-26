@@ -25,7 +25,6 @@ class Auto_Entries {
     public function __construct() {
 
         // Add product purchase action
-//      add_action( 'woocommerce_order_status_completed', array( $this, 'handle_product_purchased' ) );
 		add_action( 'woocommerce_checkout_update_order_meta', array( $this, 'handle_product_purchased' ) );
 
     }
@@ -44,8 +43,6 @@ class Auto_Entries {
             foreach ( $items as $item ) {
 
                 $product_cats_ids = wc_get_product_term_ids( $item->get_product_id(), 'product_cat' );
-
-                error_log('About to cycle through ' . var_export( $product_cats_ids, true ) );
 
                 foreach( $product_cats_ids as $product_cat_id ) {
                     $this->create_entries( $product_cat_id, $item, $order );
@@ -67,15 +64,11 @@ class Auto_Entries {
 
             $gform_id = $this->get_cat_setting_value( $cat_id, 'gform' );
 
-            error_log( 'Cat ID ' . $cat_id . ' has gform value ' . var_export( $gform_id, true ) );
-
             if ( !is_null( $gform_id ) && $gform_id !== '' ) {
 
                 $attribute_gform_entry = $this->get_cat_attribute_gform_entry( $item );
 
                 $number = $this->get_cat_number_of_entries( $cat_id );
-
-                error_log( 'Rady to create ' . $number . ' of entries' );
 
                 $counter = 0;
                 while( $counter < $number ) {
@@ -100,8 +93,6 @@ class Auto_Entries {
                         $entry[ $field_id_2 ] = $this->get_cat_attribute_field_value( 2, $cat_id, $attribute_gform_entry );
 
                     $added_entries[] = \GFAPI::add_entry( $entry );
-
-                    error_log(' Just added to ' . var_export( $added_entries, true ) );
 
                     $counter++;
                 }
