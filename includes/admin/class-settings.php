@@ -22,6 +22,10 @@ class Settings {
             'name' => 'wcgf_entry_auto_create_number',
             'key' => '_wcgf_entry_auto_create_number',
         ),
+        'first_pending' => array(
+            'name' => 'wcgf_entry_auto_create_first_pending',
+            'key' => '_wcgf_entry_auto_create_first_pending',
+        ),
         'order_id_field_id' => array(
             'name' => 'wcgf_entry_order_id_field',
             'key' => '_wcgf_entry_order_id_field',
@@ -101,6 +105,11 @@ class Settings {
                 <td>
                     <input type="number" name="<?php echo $settings['number']['name'] ?>" id="<?php echo $settings['number']['name'] ?>" value="<?php echo $settings['number']['existing']; ?>">
                     <p class="description">Quantity of entries to create in the above Gravity Form when a product in this category is purchased.</p> 
+                <br>
+                    <input type="hidden" name="<?php echo $settings['first_pending']['name']; ?>" value="0">
+                    <input type="checkbox" name="<?php echo $settings['first_pending']['name']; ?>" id="<?php echo $settings['first_pending']['name']; ?>" value="1"<?php echo ( $settings['first_pending']['existing'] == '1' ) ? ' checked' : ''; ?>>
+                    <label for="<?php echo $settings['first_pending']['name']; ?>"><?php _e('Set first newly created entry to have "Unapproved" GravityView approval status'); ?>
+
                 </td>
             </tr>
             <tr>
