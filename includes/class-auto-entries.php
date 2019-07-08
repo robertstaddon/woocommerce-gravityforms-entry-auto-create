@@ -77,6 +77,12 @@ class Auto_Entries {
                         'created_by' => (int) $order->get_user_id(),
                     );
 
+                    // Set approval status of first entry
+                    if ( $counter == 0 ) {
+                        if ( $this->get_cat_setting_value( $cat_id, 'first_pending' ) == 1 )
+                            $entry[ 'is_approved' ] = 2; // Disapproved status (i.e. Pending) - https://docs.gravityview.co/article/389-approvalstatus-merge-tag
+                    }
+
                     // Add order fields
                     if ( $order_id_field_id = $this->get_cat_setting_value( $cat_id, 'order_id_field_id' ) )
                         $entry[ $order_id_field_id ] = $order->get_id();

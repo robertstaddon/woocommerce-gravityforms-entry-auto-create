@@ -108,7 +108,7 @@ class Settings {
                 <br>
                     <input type="hidden" name="<?php echo $settings['first_pending']['name']; ?>" value="0">
                     <input type="checkbox" name="<?php echo $settings['first_pending']['name']; ?>" id="<?php echo $settings['first_pending']['name']; ?>" value="1"<?php echo ( $settings['first_pending']['existing'] == '1' ) ? ' checked' : ''; ?>>
-                    <label for="<?php echo $settings['first_pending']['name']; ?>"><?php _e('Set first newly created entry to have "Unapproved" GravityView approval status'); ?>
+                    <label for="<?php echo $settings['first_pending']['name']; ?>"><?php _e('Set first newly created entry to have a GravityView approval status of "Disapproved" (i.e. Pending)'); ?>
 
                 </td>
             </tr>
